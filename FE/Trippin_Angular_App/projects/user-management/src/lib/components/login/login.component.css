@@ -1,0 +1,98 @@
+
+.glass-bg {
+  min-height: 100vh;
+  width: 100vw;
+  background: url('https://www.hdwallpapers.in/download/yosemite_national_park_california_milky_way_mountain_starry_sky_hd_nature-HD.jpg') no-repeat center center fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-size: cover;
+  margin: 0; 
+  padding: 0;
+}
+
+
+.glass-form {
+  /* background: rgba(40, 48, 72, 0.35); */
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 18px;
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  min-width: 350px;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.glass-title {
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.glass-field {
+  width: 100%;
+  margin-bottom: 1.3rem;
+  color: whitesmoke;
+}
+
+/* .mat-form-field .mat-form-field-underline {
+  background-color: rgba(255,255,255,0.3);
+}
+.mat-form-field .mat-form-field-label {
+  color: #fff;
+  opacity: 0.8;
+}
+.mat-form-field-infix .mat-input-element {
+  color:  #fff;
+}
+.mat-form-field.mat-form-field-ripple {
+  background-color: #90caf9;
+} */
+
+.glass-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.glass-link {
+  color: #90caf9;
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 500;
+}
+.glass-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.glass-btn {
+  width: 100%;
+  background: rgba(255,255,255,0.85);
+  color: #23272f;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
+}
+
+.glass-register {
+  text-align: center;
+  color: #fff;
+  font-size: 1.05rem;
+  opacity: 0.95;
+}

@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  selector: 'lib-login',
+  selector: 'login-component',
   imports: [CommonModule,MatFormFieldModule,MatCheckboxModule,MatInputModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',

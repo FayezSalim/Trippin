@@ -23,7 +23,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "./dist/user-management/assets",
+                "output": "/assets/user-management/"
               }
             ],
             "styles": [

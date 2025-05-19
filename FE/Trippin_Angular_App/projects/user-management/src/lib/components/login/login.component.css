@@ -2,7 +2,7 @@
 .glass-bg {
   min-height: 100vh;
   width: 100vw;
-  background: url('https://www.hdwallpapers.in/download/yosemite_national_park_california_milky_way_mountain_starry_sky_hd_nature-HD.jpg') no-repeat center center fixed;
+  background: url('/assets/user-management/yosemite_national_park_milky_way.jpg') no-repeat center center fixed;
   display: flex;
   align-items: center;
   justify-content: center;

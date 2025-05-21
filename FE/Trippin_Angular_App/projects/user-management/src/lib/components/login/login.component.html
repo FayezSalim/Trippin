@@ -1,21 +1,71 @@
 <div class="glass-bg">
-  <form class="glass-form">
-    <h2 class="glass-title">Trippin</h2>
-    <mat-form-field appearance="fill" class="glass-field">
-      <input matInput placeholder="Enter your email" type="email" required autocomplete="username" />
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="glass-field">
-      <input matInput placeholder="Enter your password" type="password" required autocomplete="current-password" />
-    </mat-form-field>
-    <div class="glass-options">
-      <mat-checkbox color="primary">Remember me</mat-checkbox>
-      <a href="#" class="glass-link">Forgot password?</a>
-    </div>
-    <button mat-raised-button color="primary" class="glass-btn" type="submit">
-      Log In
-    </button>
-    <div class="glass-register">
-      Don't have an account? <a href="#" class="glass-link">Register</a>
-    </div>
-  </form>
+  <div #panes class="form-container glass-form" [@paneChange]="{
+      value: isRegistering(),
+      params: {
+        startHeight: panes.clientHeight
+      }
+    }">
+    <!-- <div #formContainer class="form-container glass-form"> -->
+
+    <!-- <div [@slideInOut]="isRegistering() ? 'register' : 'login'"> -->
+
+    @switch(isRegistering()) {
+    @case(true){
+    <form #registerForm="ngForm" *ngIf="isRegistering()" (ngSubmit)="register(registerForm)">
+      <h2 class="glass-title">Welcome!</h2>
+      <mat-form-field appearance="fill" class="glass-field">
+        <input matInput ngModel name="name" placeholder="Name" type="text" required />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="glass-field">
+        <input matInput ngModel name="email" placeholder="Email" type="email" required />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="glass-field">
+        <input matInput ngModel name="password" placeholder="Password" type="password" required />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="glass-field">
+        <input matInput ngModel name="confirmPassword" placeholder="Confirm Password" type="password" required />
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="glass-btn" type="submit">
+        Register
+      </button>
+      <div class="error-message">{{ errorMessage() }}</div>
+      <div class="glass-register">
+        Already have an account?
+        <a href="#" class="glass-link" (click)="showLogin($event)">Log In</a>
+      </div>
+    </form>
+    }
+    @case(false){
+    <form #loginForm="ngForm" *ngIf="!isRegistering()" (ngSubmit)="login(loginForm)">
+
+      <h2 class="glass-title">Trippin</h2>
+
+      <mat-form-field appearance="fill" class="glass-field">
+        <input matInput ngModel name="username" placeholder="Enter your email" type="email" required
+          autocomplete="username" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="glass-field">
+        <input matInput ngModel name="password" placeholder="Enter your password" type="password" required
+          autocomplete="current-password" />
+      </mat-form-field>
+
+      <div class="error-message">{{ errorMessage() }}</div>
+      <div class="glass-options">
+        <mat-checkbox color="primary">Remember me</mat-checkbox>
+        <a href="#" class="glass-link">Forgot password?</a>
+      </div>
+      <button mat-raised-button color="primary" class="glass-btn" type="submit">
+        Log In
+      </button>
+      <div class="glass-register">
+        Don't have an account?
+        <a href="#" class="glass-link" (click)="showRegister($event)">Register</a>
+      </div>
+    </form>
+    }
+    }
+
+
+  </div>
+
 </div>

@@ -1,35 +1,59 @@
-import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Inject, Injectable } from "@angular/core";
+import { AbstractAuthProvider } from "../providers/abstract-auth.provider";
+import { AuthCredential } from "../models/auth-credential";
+import { AuthResult } from "../models/auth-result";
 
-@Injectable({providedIn: 'root'})
+
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-    private isAuthenticated: boolean = false;
 
-    constructor() { }
+    constructor(@Inject(AbstractAuthProvider) private authProviders: AbstractAuthProvider<AuthCredential>[], private httpClient: HttpClient) {
 
-    login(username: string, password: string): boolean {
-        // Implement your login logic here
-        // For example, check username and password against a database
-        if (username === 'admin' && password === 'password') {
-            this.isAuthenticated = true;
-            return true;
-        }
-        return false;
     }
 
-    signUp(username: string, password: string): boolean {
-        return false;
+    async login(credential: AuthCredential): Promise<AuthResult<AuthCredential>> {
+        const provider = this.getProvider(credential.provider);
+
+        try {
+            var res = await provider.login(credential);
+            return res;
+        } catch (error) {
+            console.error('Error logging in user:', error);
+            throw new Error('Login failed', { cause: (error as Error).cause });
+        }
+    }
+
+    async signUp(credential: AuthCredential): Promise<AuthResult<AuthCredential>> {
+        const provider = this.getProvider(credential.provider);
+
+        try {
+            var res = await provider.signUp(credential);
+            return res;
+        } catch (error) {
+            console.error('Error signingup user:', error);
+            throw new Error('SignUp failed', { cause: (error as Error).cause });
+        }
     }
 
     forgotPassword(email: string): boolean {
-        // Implement your password reset logic here
+
+        //TOOD
         return false;
     }
 
     logout(): void {
-        this.isAuthenticated = false;
+        //TODO
     }
 
-    isLoggedIn(): boolean {
-        return this.isAuthenticated;
+    private getProvider(provider: string): AbstractAuthProvider<AuthCredential> {
+        let providerInstance: AbstractAuthProvider<AuthCredential> | undefined;
+
+        providerInstance = this.authProviders.find((providerInstance) => providerInstance.provider === provider);
+
+        if (providerInstance) {
+            return providerInstance;
+        }
+        throw new Error(`Provider ${provider} not found`);
     }
 }

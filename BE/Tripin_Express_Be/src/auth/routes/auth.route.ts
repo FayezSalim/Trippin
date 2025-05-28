@@ -2,7 +2,7 @@ import { CredentialsSignin, ExpressAuth, ExpressAuthConfig, getSession } from "@
 import credentials from "@auth/express/providers/credentials";
 import bcrypt from "bcryptjs";
 import { authDbService } from "../services/auth-db.service";
-import { createUser, getItems } from "../controllers/auth.controller";
+import { createUser, getUserDetails } from "../controllers/auth.controller";
 import { Router, Request, Response, NextFunction } from "express";
 import { AuthErrorTypes } from "../models/auth-error-types";
 
@@ -16,13 +16,13 @@ const expressAuthConfig: ExpressAuthConfig = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        //validate credentials qwithzod npm package
+        //TODO validate credentials qwithzod npm package
 
         const userModel = await authDbService.userModel();
 
         const user = await userModel.findOne({
-          email: credentials?.email,
-        }).select("+password");
+          email: credentials?.email as any,
+        }, ["password"] as any);
 
         if (!user) throw new CredentialsSignin("Wrong Email/Password", { cause: AuthErrorTypes.InvalidCredentials });
 
@@ -43,24 +43,26 @@ const expressAuthConfig: ExpressAuthConfig = {
 };
 
 export async function authSession(req: Request, res: Response, next: NextFunction) {
-  res.locals.session = await getSession(req, expressAuthConfig);
-  next();
-}
-
-export async function convertRedirectsToErrors(req: Request, res: Response, next: NextFunction) {
-  if (res.statusCode === 302) {
-    res.statusCode = 200;
+  if (req.headers.cookie?.indexOf('authjs.session-token') != -1) {
+    res.locals.session = await getSession(req, expressAuthConfig);
   }
-
   next();
 }
 
-export const authOptions = ExpressAuth(expressAuthConfig);
+// export async function convertRedirectsToErrors(req: Request, res: Response, next: NextFunction) {
+//   if (res.statusCode === 302) {
+//     res.statusCode = 200;
+//   }
+
+//   next();
+// }
+
+export const expressAuth = ExpressAuth(expressAuthConfig);
 
 
 export const authRouter = Router();
 authRouter.use(authSession);
-authRouter.get('/test', getItems);
+authRouter.get('/getUserDetails', getUserDetails);
 authRouter.post('/signup', createUser);
-authRouter.use(authOptions);
-authRouter.use(convertRedirectsToErrors);
+authRouter.use(expressAuth);
+//authRouter.use(convertRedirectsToErrors);

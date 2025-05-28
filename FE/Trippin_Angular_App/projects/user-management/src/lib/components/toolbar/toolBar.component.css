@@ -1,0 +1,9 @@
+/* Hide the dropdown by default */
+.profile-dropdown {
+  display: none;
+}
+
+/* Show the dropdown when active */
+.profile-dropdown.active {
+  display: block;
+}

@@ -1,7 +1,8 @@
 import { DatabaseProvider } from "./models/database.provider";
-import { MongoDbProvider } from "./providers/mongo-db.provider";
+import { MongoDbProvider } from "./providers/mongodb.provider";
+import { PostgreSqlProvider } from "./providers/postgresql.provider";
 
-export const enum DbTypes { "MongoDb" };
+export const enum DbTypes { "MongoDb" ,"PostgreSql"};
 
 export class DatabaseService {
     private connectedDbs: Map<DbTypes, DatabaseProvider>;
@@ -41,6 +42,8 @@ export class DatabaseService {
         switch (db) {
             case DbTypes.MongoDb:
                 return new MongoDbProvider();
+            case DbTypes.PostgreSql:
+                return new PostgreSqlProvider();
             default:
                 throw new Error(`Database ${db} not supported`);
         }

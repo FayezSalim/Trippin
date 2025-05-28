@@ -1,0 +1,27 @@
+<div *ngIf="authStore.isLoggedIn()">
+    <!-- <mat-toolbar >
+        <span>Welcome {{authStore.name()}}</span>
+    </mat-toolbar> -->
+    <nav class="bg-white border-b border-gray-200 px-4 py-2 flex items-center justify-between">
+  <div class="flex items-center space-x-4">
+    <span class="text-xl font-bold text-blue-600">Trippin</span>
+    <!-- Add more nav links here if needed -->
+  </div>
+  <div class="flex items-center space-x-4">
+    <span class="hidden sm:inline text-gray-700">Welcome {{authStore.name()}}</span>
+    <div class="relative">
+      <button (click)="toggleProfileSettings($event)" class="flex items-center focus:outline-none">
+        <img src="https://ui-avatars.com/api/?name='authStore.name()'" alt="User Avatar" class="w-8 h-8 rounded-full border" />
+        <svg class="w-4 h-4 ml-1 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      <div [ngClass]="{'active': dropdownOpen}"
+           class="profile-dropdown absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg py-1 z-50">
+        <a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Settings</a>
+        <button  class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">Log out</button>
+      </div>
+    </div>
+  </div>
+</nav>
+</div>

@@ -1,0 +1,60 @@
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(40px);}
+  100% { opacity: 1; transform: translateY(0);}
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes swipe-left-content {
+  0% { opacity: 1; transform: translateX(0);}
+  100% { opacity: 0; transform: translateX(-100%);}
+}
+.animate-swipe-left-content {
+  animation: swipe-left-content 0.5s forwards;
+}
+
+@keyframes swipe-in-right {
+  0% { opacity: 0; transform: translateX(100%);}
+  100% { opacity: 1; transform: translateX(0);}
+}
+.animate-swipe-in-right {
+  animation: swipe-in-right 0.5s forwards;
+}
+
+.btn-reflect {
+  position: relative;
+  z-index: 1;
+}
+.btn-reflect::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 40px;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, rgba(59,130,246,0.4), rgba(59,130,246,0));
+  opacity: 0.5;
+  transform: scaleY(-1);
+  pointer-events: none;
+  filter: blur(2px);
+}
+
+
+/* Optional: for smoother fade if not using Angular animations */
+.fade-in {
+  animation: fadeIn 0.4s;
+}
+.fade-out {
+  animation: fadeOut 0.4s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

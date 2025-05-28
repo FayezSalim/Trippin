@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideUserManagement } from '@trippin/user-management';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withXsrfConfiguration } from '@angular/common/http';
+import { provideTrips } from '@trippin/trips';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,5 +16,6 @@ export const appConfig: ApplicationConfig = {
       }),),
     provideAnimations(),
     provideUserManagement(),
+    provideTrips(),
     provideRouter(routes)]
 };

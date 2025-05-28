@@ -1,13 +1,14 @@
 import { SchemaOptions } from "../../../db/models/schema-options"
 
+
 export interface User {
-  _id: string;
+  _id?: string;
   email: string;
   password: string;
   name: string;
-  image: string;
-  createdAt: Date;
-  updatedAt: Date;
+  imageKey: string; //link to blob storage for images
+  createdAt: string;
+  updatedAt: string;
 }
 
 export const userSchemaOptions: SchemaOptions<User> = {

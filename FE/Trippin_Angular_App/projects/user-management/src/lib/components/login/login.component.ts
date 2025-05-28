@@ -1,13 +1,13 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { trigger, state, style, animate, transition, query, group } from '@angular/animations';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule, NgForm } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { EmailCredential } from '../../models/email-credential';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -32,10 +32,10 @@ import { EmailCredential } from '../../models/email-credential';
     //   ], { params: { startHeight: 400, startWidth: 400 } })
     // ]),
     trigger('paneChange', [
-      transition('void => *',[]),
+      transition('void => *', []),
       transition('* => *', [
         query(':self', [style({ height: '{{startHeight}}px' })]),
-        query(':enter', [style({ opacity: 0,  })]),
+        query(':enter', [style({ opacity: 0, })]),
         // query(':leave', [
         //   style({ opacity: 1,  }),
         //   animate('2.0s ease-out', style({ opacity: 0 })),
@@ -44,7 +44,7 @@ import { EmailCredential } from '../../models/email-credential';
           [
             query(':self', [animate('1.0s ease', style({ height: '*' }))]),
             query(':enter', [
-              animate('1.0s ease', style({ opacity: 1,  })),
+              animate('1.0s ease', style({ opacity: 1, })),
             ]),
           ],
           { params: { startHeight: 0 } }
@@ -57,8 +57,11 @@ export class LoginComponent {
   protected isRegistering = signal(false);
   protected errorMessage = signal("");
 
-  constructor(private authService: AuthService) {
-    
+  private readonly authService: AuthService = inject(AuthService);
+  private readonly router: Router = inject(Router);
+
+  constructor() {
+
   }
   // TODO fix scaling for mobile devices
 
@@ -91,10 +94,7 @@ export class LoginComponent {
     const { username, password } = form.value;
     const userNameModel = form.controls['username'];
 
-
-    //TODO hash passwrod
-
-    await this.authService.login(new EmailCredential(username, password)).then((res) => {
+    this.authService.login(new EmailCredential(username, password)).then((res) => {
       if (res.error) {
         this.errorMessage.set(res.error);
         // Example: set a custom error
@@ -103,12 +103,12 @@ export class LoginComponent {
         }
       } else {
         this.errorMessage.set("");
-        //TODO redirect to home page
       }
+    }).catch((err) => {
+      console.error(`login error ${err}`);
     });
+
     //failure case //success case
     //TODO progress bar 
-
-    //await fetch('http://localhost:3000/auth/test', { credentials: 'include' });
   }
 }

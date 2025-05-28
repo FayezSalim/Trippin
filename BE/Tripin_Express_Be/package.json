@@ -1,5 +1,5 @@
 {
-  "name": "triipin_express_be",
+  "name": "tripin_express_be",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -13,10 +13,10 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/express": "^5.0.2",
-    "@types/node": "^22.15.19",    
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.2",
+    "@types/node": "^22.15.19",
     "eslint": "^9.27.0",
     "install": "^0.13.0",
     "nodemon": "^3.1.10",
@@ -27,10 +27,14 @@
   },
   "dependencies": {
     "@auth/express": "^0.10.1",
+    "@js-temporal/polyfill": "^0.5.1",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "mongoose": "^8.15.0"
+    "mongoose": "^8.15.0",
+    "pg": "^8.16.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
   }
 }

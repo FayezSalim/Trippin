@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
-import { AuthGuard, provideUserManagementRoutes } from '@trippin/user-management';
+import { provideUserManagementRoutes } from '@trippin/user-management';
+import { provideTripsRoutes } from '@trippin/trips';
 
 export const routes: Routes = [
-    ...provideUserManagementRoutes()
+    ...provideUserManagementRoutes(),
+    ...provideTripsRoutes()
 ];

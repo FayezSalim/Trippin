@@ -6,6 +6,9 @@ import { UserMangementProviderOptions } from "../models/user-management-provider
 import { AbstractAuthProvider } from "./abstract-auth.provider";
 import { EmailAuthProvider } from "./email-auth-provider";
 
+//TODO change to security module
+//TODO take useSecureProtocol as paramter and store into store
+
 /**
  * @api
  * @param options

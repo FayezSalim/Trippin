@@ -20,6 +20,9 @@
     "paths": {
       "@trippin/user-management": [
         "./dist/user-management"
+      ],
+      "@trippin/trips": [
+        "./dist/trips"
       ]
     }
   },

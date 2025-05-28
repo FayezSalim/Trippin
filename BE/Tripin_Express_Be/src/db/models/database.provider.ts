@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { SchemaOptions } from "./schema-options";
+import { ModelProvider } from "./model.provider";
 
 export interface DatabaseProvider {
 
@@ -10,7 +11,5 @@ export interface DatabaseProvider {
     /**@internal */
     disconnect: () => Promise<void>;
 
-    getModel<T>(modelName: string, schemaOptions: SchemaOptions<T>): Promise<dbModel<T>>;
+    getModel<T extends object>(modelName: string, schemaOptions: SchemaOptions<T>): Promise<ModelProvider<T>>;
 }
-
-export type dbModel<T> = mongoose.Model<T>; //make it generic

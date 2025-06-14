@@ -1,6 +1,6 @@
 import { Provider } from "@angular/core";
 import { Routes } from "@angular/router";
-import { TripsComponent } from "../components/trips/trips.component";
+import { TripsComponent } from "../components/trip-planner/trip-planner.component";
 import { AuthGuard } from "@trippin/user-management";
 
 

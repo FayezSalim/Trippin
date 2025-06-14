@@ -2,6 +2,7 @@ import express from 'express';
 import { errorHandler } from './middlewares/error-handler.middleware';
 import { authRouter } from './auth/routes/auth.route';
 import cors from 'cors';
+import { aiRouter } from './ai/ai.routes';
 
 const app = express();
 const corsOptions = {
@@ -15,6 +16,7 @@ app.use(express.json());
 
 // Routes
 app.use('/auth', authRouter);
+app.use('/ai', aiRouter);
 // Global error handler (should be after routes)
 app.use(errorHandler);
 

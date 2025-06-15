@@ -23,6 +23,9 @@
       ],
       "@trippin/trips": [
         "./projects/trips/src/public-api.ts"
+      ],
+      "@trippin/ui-components":[
+        "./projects/ui-components/src/public-api.ts"
       ]
     }
   },

@@ -13,7 +13,7 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
     var salt = await bcrypt.genSalt();
     credentials.password = await bcrypt.hash(credentials.password, salt);
     const userModel = await authDbService.userModel();
-    await userModel.create({ ...credentials, createdAt: new Date().toISOString(), imageKey: '', updatedAt: new Date().toISOString() } as User);
+    await userModel.create({ ...credentials, createdAt: new Date().toISOString(), imageUrl: '', updatedAt: new Date().toISOString() } as User);
 
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {

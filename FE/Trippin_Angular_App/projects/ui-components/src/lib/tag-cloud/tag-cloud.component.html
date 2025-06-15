@@ -1,0 +1,28 @@
+<div class="flex flex-col w-full h-full">
+    <!-- Tag cloud area (fills available space above selected tags) -->
+    <div #cloudArea class="relative flex-1 w-full overflow-hidden">
+        <ng-container *ngFor="let tag of visibleTags">
+            <div class="absolute flex items-center px-4 py-2 rounded-full text-sm font-medium shadow bg-blue-700 text-white hover:bg-blue-800 transition-all duration-200 border-2 border-blue-400 w-[140px] h-[40px] overflow-hidden"
+                [title]="tag.tagData.name" [style.top]="tag.top" [style.left]="tag.left" style="z-index:10; cursor:pointer;">
+                <span class="mr-2 flex-shrink-0">{{tag.tagData.icon}}</span>
+                <span class="flex-1 truncate text-left">{{tag.tagData.name}}</span>
+                <button class="ml-2 flex-shrink-0 text-white hover:text-red-400 focus:outline-none"
+                    (click)="dismissTag(tag)" title="Dismiss" tabindex="-1" style="z-index:2">
+                    &times;
+                </button>
+                <span class="absolute inset-0" (click)="selectTag(tag)" style="z-index:1"></span>
+            </div>
+        </ng-container>
+    </div>
+    <!-- Selected tags area at the bottom, takes up its own space -->
+    <div class="w-full flex flex-wrap justify-center gap-2 py-2 z-20 bg-transparent">
+        <ng-container *ngFor="let tag of selectedTags">
+            <span
+                class="flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-medium bg-green-700 text-white border border-green-400 cursor-pointer"
+                (click)="removeSelectedTag(tag)" title="Remove">
+                <span>{{tag.tagData.name}}</span>
+                <span>{{tag.tagData.icon}}</span>
+            </span>
+        </ng-container>
+    </div>
+</div>

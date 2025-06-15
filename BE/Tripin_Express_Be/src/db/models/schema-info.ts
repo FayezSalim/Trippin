@@ -5,5 +5,8 @@ export type schemaInfo<T> = {
         unique?: boolean;
         default?: any;
         match?: (string | RegExp)[];
+        primaryKey?: boolean;
+        autoIncrement?: boolean;
+        field?: string
     }
 }

@@ -52,21 +52,11 @@ export const TripPlannerStore = signalStore(
         setTripDetails(details: Partial<Trip>) {
             patchState(store, { trip: { ...details, activities: [], possibleActivites: [] } });
         },
-        addActivity(activityToAdd: Activity) {
+        setSelectedActivites(selectedActivites: Activity[]) {
             patchState(store, {
                 trip: {
                     ...store.trip(),
-                    activities: [...store.trip().activities, activityToAdd],
-                    possibleActivites: [...store.trip().possibleActivites.filter(activity => activity !== activityToAdd)]
-                }
-            });
-        },
-        removeActivity(activityToRemove: Activity) {
-            patchState(store, {
-                trip: {
-                    ...store.trip(),
-                    activities: store.trip().activities.filter(activity => activity !== activityToRemove),
-                    possibleActivites: [...store.trip.possibleActivites(), activityToRemove]
+                    activities: [...selectedActivites]
                 }
             });
         },
@@ -84,7 +74,8 @@ export const TripPlannerStore = signalStore(
                 return http.get<{ activities: Activity[] }>('http://localhost:3000/ai/todoList', { withCredentials: true, params });
             }),
             tap((possibleActivites) => patchState(store, { trip: { ...store.trip(), possibleActivites: possibleActivites.activities }, })),
-            tap(() => patchState(store, { viewState: ViewState.Activities }))
+            tap(() => patchState(store, { viewState: ViewState.Activities })),
+
         )
         )
     }))

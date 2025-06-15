@@ -18,6 +18,9 @@
     "target": "ESNext",
     "module": "ESNext",
     "paths": {
+      "@trippin/ui-components":[
+        "./dist/ui-components"
+      ],
       "@trippin/user-management": [
         "./dist/user-management"
       ],

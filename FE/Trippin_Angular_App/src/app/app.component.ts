@@ -20,7 +20,8 @@ export class AppComponent {
     effect(()=>{
       var isLoggedIn = this.authService.isLoggedIn();
       if(isLoggedIn){
-        this.router.navigate(['trips']);
+        this.router.navigate(['tripPlanner']);
+        //TODO navigate to trips where the decision is made to navigate to create.active.list of trips
       }      
     });
     

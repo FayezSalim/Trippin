@@ -1,71 +1,81 @@
-<div class="glass-bg">
-  <div #panes class="form-container glass-form" [@paneChange]="{
-      value: isRegistering(),
-      params: {
-        startHeight: panes.clientHeight
-      }
-    }">
-    <!-- <div #formContainer class="form-container glass-form"> -->
+<div class="min-h-screen flex items-center justify-center bg-cover bg-center px-2"
+  style="background-image: url('assets/user-management/yosemite_national_park_milky_way.jpg');">
+  <div class="w-full max-w-md bg-white/5 backdrop-filter: blur(4px); 
+    rounded-2xl shadow-lg p-4 sm:p-8 flex flex-col animate-fade-in-up border border-white/30"
+    style="box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);">
+    <!-- transition-all duration-1500 ease-in-out overflow-hidden  [ngClass]="isRegistering()===true ? 'max-h-[700px]' : 'max-h-[420px]'-->
+    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-white mb-6 sm:mb-8">
+      {{ isRegistering()===false ? 'Welcome Back!' : 'Welcome!' }}
+    </h2>
 
-    <!-- <div [@slideInOut]="isRegistering() ? 'register' : 'login'"> -->
 
-    @switch(isRegistering()) {
-    @case(true){
-    <form #registerForm="ngForm" *ngIf="isRegistering()" (ngSubmit)="register(registerForm)">
-      <h2 class="glass-title">Welcome!</h2>
-      <mat-form-field appearance="fill" class="glass-field">
-        <input matInput ngModel name="name" placeholder="Name" type="text" required />
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="glass-field">
-        <input matInput ngModel name="email" placeholder="Email" type="email" required />
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="glass-field">
-        <input matInput ngModel name="password" placeholder="Password" type="password" required />
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="glass-field">
-        <input matInput ngModel name="confirmPassword" placeholder="Confirm Password" type="password" required />
-      </mat-form-field>
-      <button mat-raised-button color="primary" class="glass-btn" type="submit">
-        Register
-      </button>
-      <div class="error-message">{{ errorMessage() }}</div>
-      <div class="glass-register">
-        Already have an account?
-        <a href="#" class="glass-link" (click)="showLogin($event)">Log In</a>
-      </div>
-    </form>
-    }
+    @switch (isRegistering()) {
     @case(false){
-    <form #loginForm="ngForm" *ngIf="!isRegistering()" (ngSubmit)="login(loginForm)">
-
-      <h2 class="glass-title">Trippin</h2>
-
-      <mat-form-field appearance="fill" class="glass-field">
-        <input matInput ngModel name="username" placeholder="Enter your email" type="email" required
-          autocomplete="username" />
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="glass-field">
-        <input matInput ngModel name="password" placeholder="Enter your password" type="password" required
-          autocomplete="current-password" />
-      </mat-form-field>
-
-      <div class="error-message">{{ errorMessage() }}</div>
-      <div class="glass-options">
-        <mat-checkbox color="primary">Remember me</mat-checkbox>
-        <a href="#" class="glass-link">Forgot password?</a>
+    <!-- Login Form -->
+    <form #loginForm="ngForm" class="flex flex-col gap-4 sm:gap-6 flex-1" (ngSubmit)="login(loginForm)">
+      <div>
+        <label class="block text-white font-semibold mb-1 text-base sm:text-lg">Email</label>
+        <input ngModel type="email" name="email"
+          class="w-full bg-transparent border-b border-white text-white placeholder-white focus:outline-none py-2 text-base sm:text-lg"
+           required />
       </div>
-      <button mat-raised-button color="primary" class="glass-btn" type="submit">
+      <div>
+        <label class="block text-white font-semibold mb-1 text-base sm:text-lg">Password</label>
+        <input ngModel type="password" name="password"
+          class="w-full bg-transparent border-b border-white text-white placeholder-white focus:outline-none py-2 text-base sm:text-lg"
+           required />
+      </div>
+      <button type="submit"
+        class="w-full mt-2 sm:mt-4 py-2 rounded-full bg-white/80 text-slate-800 font-bold text-base sm:text-lg shadow hover:bg-white transition-all duration-200 active:scale-95">
         Log In
       </button>
-      <div class="glass-register">
-        Don't have an account?
-        <a href="#" class="glass-link" (click)="showRegister($event)">Register</a>
-      </div>
     </form>
     }
+    @case(true){
+    <!-- Register Form -->
+    <form #registerForm="ngForm" class="flex flex-col gap-4 sm:gap-6 flex-1" (ngSubmit)="register(registerForm)">
+      <div>
+        <label class="block text-white font-semibold mb-1 text-base sm:text-lg">Name</label>
+        <input ngModel type="text" name="name"
+          class="w-full bg-transparent border-b border-white text-white placeholder-white focus:outline-none py-2 text-base sm:text-lg"
+           required />
+      </div>
+      <div>
+        <label class="block text-white font-semibold mb-1 text-base sm:text-lg">Email</label>
+        <input ngModel type="email" name="email"
+          class="w-full bg-transparent border-b border-white text-white placeholder-white focus:outline-none py-2 text-base sm:text-lg"
+           required />
+      </div>
+      <div>
+        <label class="block text-white font-semibold mb-1 text-base sm:text-lg">Password</label>
+        <input ngModel type="password" name="password"
+          class="w-full bg-transparent border-b border-white text-white placeholder-white focus:outline-none py-2 text-base sm:text-lg"
+          required />
+      </div>
+      <div>
+        <label class="block text-white font-semibold mb-1 text-base sm:text-lg">Confirm Password</label>
+        <input ngModel type="password" name="confirmPassword"
+          class="w-full bg-transparent border-b border-white text-white placeholder-white focus:outline-none py-2 text-base sm:text-lg"
+          required />
+      </div>
+      <button type="submit"
+        class="w-full mt-2 sm:mt-4 py-2 rounded-full bg-white/80 text-slate-800 font-bold text-base sm:text-lg shadow hover:bg-white transition-all duration-200 active:scale-95">
+        Register
+      </button>
+    </form>
     }
 
+    }
 
+    <div class="mt-4 text-center text-white text-base">
+      <ng-container *ngIf="!isRegistering()">
+        Don't have an account?
+        <button type="button" class="underline font-semibold" (click)="switchForm()">Register</button>
+      </ng-container>
+      <ng-container *ngIf="isRegistering()">
+        Already have an account?
+        <button type="button" class="underline font-semibold" (click)="switchForm()">Log In</button>
+      </ng-container>
+    </div>
   </div>
-
 </div>

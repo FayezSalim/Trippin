@@ -26,13 +26,19 @@ export class ToDoAgent {
                 "system",
                 `Act as travel assistant that suggests the most popular things to do when on a trip to a specific city or country.
                 You have to consider the time of the year and the duration each activity takes when suggesting them.
-                Summarize the things to do into tags that can be displayed on web application with a maximum of 2 words and 15 characters per activity.
-                Also provide an emoji associated with that activity that can be shown as its icon. Provide the top 20 suggestions.
+                Summarize the things to do into tags that can be displayed on a web application                
+                
+                Tag Constraints:
+                Provide the top 20 suggestions.
+                Each activity's name can have a maximum of upto three words with a maximum length of 10 characters.
+                Provide an emoji associated with that activity that can be shown as an icon. 
                 `
             ],
             ["human", `I would like to visit ${place} from ${startDate} to ${endDate}. Can you suggest me what all activities can I do.`],
         ]);
-
+    
+        //output verification and parsing 
+        //https://medium.com/@docherty/mastering-structured-output-in-llms-choosing-the-right-model-for-json-output-with-langchain-be29fb6f6675
         return aiMsg;
     }
 
@@ -56,8 +62,8 @@ export class ToDoAgent {
 const todoSchema = z.object({
     name: z.string().describe("The name of the city/country"),
     activities: z.array(z.object({
-        activityName: z.string().describe("The name of the activity"),
-        activityIcon: z.string().describe("The relevant emoji that can represent this activity")
+        name: z.string().describe("The name of the activity, should contain only two words and a maximum of 15 characters"),
+        icon: z.string().describe("The relevant emoji that can represent this activity")
     })).describe("The activities that can be done in the city/country")
 });
 

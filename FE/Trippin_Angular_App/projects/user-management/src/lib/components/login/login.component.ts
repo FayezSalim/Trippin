@@ -1,5 +1,5 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -15,43 +15,7 @@ import { Router } from '@angular/router';
   imports: [CommonModule, MatFormFieldModule, MatCheckboxModule, MatInputModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  standalone: true,
-  animations: [
-    // trigger('slideInOut', [
-    //   state('login', style({ transform: 'translateX(0%)', })),
-    //   state('register', style({ transform: 'translateX(0%)', })),
-    //   transition('login <=> register', [
-    //     style({ transform: 'translateX(-5%)', }),
-    //     animate('1000ms ease', style({ transform: 'translateX(0%)', }))
-    //   ])
-    // ]),
-    // trigger('resizeBox', [
-    //   transition('* <=> *', [
-    //     style({ height: '{{startHeight}}px', width: '{{startWidth}}px' }),
-    //     animate('2.0s ease', style({ height: '*', width: '*' })),
-    //   ], { params: { startHeight: 400, startWidth: 400 } })
-    // ]),
-    trigger('paneChange', [
-      transition('void => *', []),
-      transition('* => *', [
-        query(':self', [style({ height: '{{startHeight}}px' })]),
-        query(':enter', [style({ opacity: 0, })]),
-        // query(':leave', [
-        //   style({ opacity: 1,  }),
-        //   animate('2.0s ease-out', style({ opacity: 0 })),
-        // ]),
-        group(
-          [
-            query(':self', [animate('1.0s ease', style({ height: '*' }))]),
-            query(':enter', [
-              animate('1.0s ease', style({ opacity: 1, })),
-            ]),
-          ],
-          { params: { startHeight: 0 } }
-        ),
-      ]),
-    ]),
-  ]
+  standalone: true
 })
 export class LoginComponent {
   protected isRegistering = signal(false);
@@ -61,20 +25,10 @@ export class LoginComponent {
   private readonly router: Router = inject(Router);
 
   constructor() {
-
-  }
-  // TODO fix scaling for mobile devices
-
-  showRegister(event: Event) {
-    this.errorMessage.set('');
-    event.preventDefault();
-    this.isRegistering.set(true);
-  }
-
-  showLogin(event: Event) {
-    this.errorMessage.set('');
-    event.preventDefault();
-    this.isRegistering.set(false);
+    effect(()=>{
+      const newVal = this.isRegistering();
+      console.log(newVal);
+    })
   }
 
   register(form: NgForm) {
@@ -88,13 +42,14 @@ export class LoginComponent {
     this.authService.signUp(new EmailCredential(email, password, name));
 
     //TODO progress bar 
+    //navigate to login on success
   }
 
   async login(form: NgForm) {
-    const { username, password } = form.value;
+    const { email, password } = form.value;
     const userNameModel = form.controls['username'];
 
-    this.authService.login(new EmailCredential(username, password)).then((res) => {
+    this.authService.login(new EmailCredential(email, password)).then((res) => {
       if (res.error) {
         this.errorMessage.set(res.error);
         // Example: set a custom error
@@ -108,7 +63,13 @@ export class LoginComponent {
       console.error(`login error ${err}`);
     });
 
+
     //failure case //success case
     //TODO progress bar 
   }
+
+  switchForm() {
+    this.isRegistering.update((currVal) => !currVal);
+  }
+
 }

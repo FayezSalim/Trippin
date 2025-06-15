@@ -2,7 +2,7 @@ import { DatabaseProvider } from "../models/database.provider";
 import { ModelProvider } from "../models/model.provider";
 import { SchemaOptions } from "../models/schema-options";
 import { Model, ModelAttributes, Sequelize, ModelAttributeColumnOptions, DataTypes } from 'sequelize';
-import { PostgreSqlModelProvider } from "./postgresql-mode.provider";
+import { PostgreSqlModelProvider } from "./postgresql-model.provider";
 
 export class PostgreSqlProvider implements DatabaseProvider {
 
@@ -61,6 +61,9 @@ export class PostgreSqlProvider implements DatabaseProvider {
                 allowNull: !this.parseRequired(info.required),
                 unique: info.unique,
                 defaultValue: info.default,
+                primaryKey: info.primaryKey,
+                autoIncrement: info.autoIncrement,
+                field: info.field
                 //validate to implement validation
 
             } as ModelAttributeColumnOptions<any>;
@@ -69,7 +72,9 @@ export class PostgreSqlProvider implements DatabaseProvider {
 
 
         const model = seq.define(modelName, preparedSchema, {
-            timestamps: schemaOptions.timestamp
+            timestamps: schemaOptions.timestamp,
+            createdAt: schemaOptions.createdAt,
+            updatedAt: schemaOptions.updatedAt
         });
         await seq.sync();
         var createdModel = new PostgreSqlModelProvider(model);

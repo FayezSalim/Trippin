@@ -1,5 +1,5 @@
 export interface ModelProvider<T> {
-    create(data: T): Promise<void>;
+    create(data: T): Promise<T>;
     findOne(data: Partial<T>, fields?: StringKeys<T>): Promise<T>
 }
 

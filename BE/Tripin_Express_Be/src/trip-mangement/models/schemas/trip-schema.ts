@@ -1,9 +1,21 @@
 import { SchemaOptions } from "../../../db/models/schema-options";
-import { TripCreationInfo } from "../trip";
+import { Trip } from "../trip";
 
-export const tripSchemaOptions: SchemaOptions<TripCreationInfo> = {
+export const tripSchemaOptions: SchemaOptions<Trip> = {
     schemaInfo: {
-        location: {
+        tripId: {
+            type: BigInt, // Define the column type
+            primaryKey: true,        // Mark it as the primary key
+            autoIncrement: true,     // Enable auto-increment
+            required: true,         // Ensure it cannot be null,
+            field: 'trip_id'
+        },
+        ownerId: {
+            type: BigInt, // Define the column type
+            required: true,         // Ensure it cannot be null,
+            field: 'owner_id'
+        },
+        destination: {
             type: String,
             required: true
         },
@@ -13,15 +25,21 @@ export const tripSchemaOptions: SchemaOptions<TripCreationInfo> = {
         },
         startDate: {
             type: Date,
-            required: true
+            required: true,
+            field: 'start_date'
         },
         endDate: {
             type: Date,
-            required: true
+            required: true,
+            field: 'end_date'
         },
-        preferredActivities: {
-            type: String
-        }
+        totalCost: {
+            type: Number,
+            required: true,
+            field: 'total_cost'
+        },
     },
-    timestamp: true
+    timestamp: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
 };

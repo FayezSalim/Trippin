@@ -7,6 +7,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Activity } from '../../models/activity';
 import { TagCloudComponent } from "@trippin/ui-components";
 import { Router } from '@angular/router';
+import { TripsService } from '../../services/trips.service';
 
 @Component({
   selector: 'trippin-trip-planner',
@@ -28,6 +29,7 @@ export class TripPlannerComponent {
   budget!: number;
 
   private router = inject(Router);
+  private tripService = inject(TripsService);
 
   constructor() {
     this.destination = "";
@@ -44,11 +46,22 @@ export class TripPlannerComponent {
     this.tripsPlannerStore.setSelectedActivites(activities);
   }
 
-  planTrip() {
+  async planTrip() {
     //creat trip in the backend retrieve id
     //pass in the route
     //component should retrieve trip detials ising id
-    this.router.navigate(['trip']);
+
+
+    //TODO fix typing 
+    const tripId = await this.tripService.createTrip({
+      budget: this.tripsPlannerStore.budget!()!,
+      destination: this.tripsPlannerStore.destination!()!,
+      endDate: this.tripsPlannerStore.endDate!()!,
+      startDate: this.tripsPlannerStore.startDate!()!,
+      preferredActivites: this.tripsPlannerStore.activities().map(x => x.name)
+    });
+
+    this.router.navigate(['trip'], { queryParams: { 'id': tripId } });
   }
 
   goToActivities() {

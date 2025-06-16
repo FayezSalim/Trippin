@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { createTrip } from "../controllers/trip.controller";
-
+import { createTrip,getTrip } from "../controllers/trip.controller";
 
 export const tripManagementRouter = Router();
-tripManagementRouter.get('/createTrip', createTrip);
+tripManagementRouter.get('/trip', getTrip);
+tripManagementRouter.post('/trip', createTrip);

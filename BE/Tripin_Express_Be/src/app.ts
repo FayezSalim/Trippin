@@ -1,8 +1,9 @@
 import express from 'express';
 import { errorHandler } from './middlewares/error-handler.middleware';
-import { authRouter } from './auth/routes/auth.route';
+import { authRouter, authSession } from './auth/routes/auth.route';
 import cors from 'cors';
 import { aiRouter } from './ai/ai.routes';
+import { tripManagementRouter } from './trip-mangement/routes/trip-mangement.routes';
 
 const app = express();
 const corsOptions = {
@@ -14,9 +15,16 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Routes
+
 app.use('/auth', authRouter);
-app.use('/ai', aiRouter);
+app.use(authSession);
+app.use('/ai', aiRouter); 
+//TODO append api to urls
+//add autg to all paths
+app.use('/trips', tripManagementRouter);
+
+
+
 // Global error handler (should be after routes)
 app.use(errorHandler);
 

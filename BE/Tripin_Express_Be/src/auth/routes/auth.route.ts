@@ -5,6 +5,7 @@ import { authDbService } from "../services/auth-db.service";
 import { createUser, getUserDetails } from "../controllers/auth.controller";
 import { Router, Request, Response, NextFunction } from "express";
 import { AuthErrorTypes } from "../models/auth-error-types";
+import { User } from "../models/schemas/user.schema";
 
 const expressAuthConfig: ExpressAuthConfig = {
   providers: [
@@ -15,7 +16,7 @@ const expressAuthConfig: ExpressAuthConfig = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials): Promise<User> {
         //TODO validate credentials qwithzod npm package
 
         const userModel = await authDbService.userModel();
@@ -36,6 +37,19 @@ const expressAuthConfig: ExpressAuthConfig = {
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user, account, profile }) {
+      if (user) {
+        token.id = (user as User).userId;
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token from a provider.
+      session.userId = token.id as string
+      return session
+    }
+  },
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",

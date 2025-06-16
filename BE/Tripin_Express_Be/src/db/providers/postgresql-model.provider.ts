@@ -7,8 +7,8 @@ export class PostgreSqlModelProvider<T extends {}> implements ModelProvider<T> {
 
     }
 
-    async create(data: T): Promise<void> {
-        await this.model.create(data);
+    async create(data: T): Promise<T> {
+        return this.model.create(data) as unknown as T; //TODO fix type
     }
 
     async findOne(data: Partial<T>, fields?: StringKeys<T>): Promise<T> {

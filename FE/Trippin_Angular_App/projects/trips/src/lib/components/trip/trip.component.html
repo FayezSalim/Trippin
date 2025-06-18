@@ -1,15 +1,11 @@
 <div class="flex flex-col h-screen bg-gray-100">
   <!-- Day Navigation -->
   <div class="flex overflow-x-auto no-scrollbar py-2 px-2 bg-white shadow z-10">
-    <button
-      *ngFor="let day of days; let i = index"
-      (click)="selectDay(i)"
-      class="flex-shrink-0 px-4 py-2 mx-1 rounded-full font-semibold transition-all duration-300"
-      [ngClass]="selectedDay === i
+    <button *ngFor="let day of tripItinerary.itinerary; let i = index" (click)="selectDay(i)"
+      class="flex-shrink-0 px-4 py-2 mx-1 rounded-full font-semibold transition-all duration-300" [ngClass]="selectedDay === i
         ? 'bg-blue-600 text-white shadow-lg scale-105'
-        : 'bg-gray-200 text-gray-700 hover:bg-blue-100'"
-    >
-      Day {{ i + 1 }}<span *ngIf="day.date" class="ml-2 text-xs font-normal">{{ day.date }}</span>
+        : 'bg-gray-200 text-gray-700 hover:bg-blue-100'">
+      Day {{ i + 1 }}<span *ngIf="day.date" class="ml-2 text-xs font-normal">{{ day.date | date:'E d MMM' }}</span>
     </button>
   </div>
 
@@ -18,32 +14,33 @@
     <!-- Vertical timeline line -->
     <div class="absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-300 to-blue-100 z-0"></div>
 
-    <div *ngFor="let section of days[selectedDay].sections; let idx = index" class="relative z-10">
+    <div *ngFor="let activity of tripItinerary.itinerary[selectedDay].activities; let idx = index"
+      class="relative z-10">
       <!-- Timeline dot -->
       <div class="absolute left-4 top-8 w-5 h-5 rounded-full bg-blue-500 border-4 border-white shadow"></div>
       <!-- Section Card -->
-      <div
-        class="ml-12 mb-8 p-4 rounded-xl shadow-lg bg-white animate-fade-in-up transition-all duration-500"
+      <div class="ml-12 mb-8 p-4 rounded-xl shadow-lg bg-white animate-fade-in-up transition-all duration-500"
         [ngClass]="{
-          'bg-blue-50': section.type === 'activity',
-          'bg-green-50': section.type === 'meal',
-          'bg-yellow-50': section.type === 'highlight'
-        }"
-      >
+          'bg-blue-50': activity.type === 'adventure',
+          'bg-green-50': activity.type === 'meal',
+          'bg-yellow-50': activity.type === 'visit'
+        }">
         <div class="flex items-center justify-between">
-          <div class="font-bold text-lg">{{ section.location }}</div>
-          <a *ngIf="section.mapLink" [href]="section.mapLink" target="_blank" class="ml-2 text-blue-500 underline text-xs">Map</a>
+          <div class="font-bold text-lg">{{ activity.location }}</div>
+          <a *ngIf="activity.mapLink" [href]="activity.mapLink" target="_blank"
+            class="ml-2 text-blue-500 underline text-xs">Map</a>
         </div>
         <div class="flex flex-wrap items-center text-xs text-gray-500 mt-1 gap-2">
-          <span *ngIf="section.time"><i class="fa fa-clock mr-1"></i>{{ section.time }}</span>
-          <span *ngIf="section.duration"><i class="fa fa-hourglass mr-1"></i>{{ section.duration }}</span>
-          <span *ngIf="section.cost"><i class="fa fa-money-bill mr-1"></i>₹{{ section.cost }}</span>
+          <span *ngIf="activity.time"><i class="fa fa-clock mr-1"></i>{{ activity.time | date:'shortTime' }}</span>
+          <span *ngIf="activity.duration"><i class="fa fa-hourglass mr-1"></i>{{ activity.duration }}hrs</span>
+          <span *ngIf="activity.cost"><i class="fa fa-money-bill mr-1"></i>₹{{ activity.cost }}</span>
         </div>
-        <div class="mt-2 text-gray-700 text-sm">{{ section.description }}</div>
-        <div *ngIf="section.highlights?.length" class="mt-2 flex flex-wrap gap-2">
-          <span *ngFor="let h of section.highlights" class="bg-blue-200 text-blue-800 px-2 py-1 rounded-full text-xs">{{ h }}</span>
+        <div class="mt-2 text-gray-700 text-sm">{{ activity.description }}</div>
+        <div *ngIf="activity.highlights?.length" class="mt-2 flex flex-wrap gap-2">
+          <span *ngFor="let h of activity.highlights"
+            class="bg-blue-200 text-blue-800 px-2 py-1 rounded-full text-xs">{{ h }}</span>
         </div>
-        <div *ngIf="section.type === 'meal'" class="mt-2 flex items-center text-green-700">
+        <div *ngIf="activity.type === 'meal'" class="mt-2 flex items-center text-green-700">
           <i class="fa fa-utensils mr-2"></i> Meal Stop
         </div>
       </div>

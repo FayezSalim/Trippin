@@ -1,0 +1,12 @@
+{
+  "node_version": "20",
+  "graphs": {
+    "testAgent": "./src/testAgent/graph.ts:graph",
+    "tripAgent":"./src/tripAgent/graph.ts:tripAgent"
+  },
+  "env": ".env",
+  "dependencies": [
+    "."
+  ],
+  "image_distro": "wolfi"
+}

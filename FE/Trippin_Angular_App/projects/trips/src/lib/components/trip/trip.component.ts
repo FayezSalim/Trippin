@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { TripItinerary } from './models/itinerary';
 
 @Component({
     selector: 'trippin-trip-timeline',
@@ -10,59 +11,21 @@ import { Component } from '@angular/core';
 })
 export class TripComponent {
     selectedDay = 0;
-    days = [
-        {
-            date: '24 March',
-            sections: [
-                {
-                    type: 'activity',
-                    location: 'History of Physics Museum',
-                    mapLink: 'https://maps.google.com/?q=History+of+Physics+Museum',
-                    time: '18pm',
-                    duration: '1hr',
-                    cost: 200,
-                    description: 'Explore the wonders of physics through interactive exhibits.',
-                    highlights: ['Guided Tour', 'Hands-on Experiments']
-                },
-                {
-                    type: 'meal',
-                    location: 'Cafe Relativity',
-                    mapLink: 'https://maps.google.com/?q=Cafe+Relativity',
-                    time: '19pm',
-                    duration: '45min',
-                    cost: 350,
-                    description: 'Enjoy a themed dinner with science-inspired dishes.',
-                    highlights: ['Vegetarian Options', 'Live Music']
-                }
-            ]
-        },
-        {
-            date: '25 March',
-            sections: [
-                {
-                    type: 'activity',
-                    location: 'Quantum Park',
-                    mapLink: 'https://maps.google.com/?q=Quantum+Park',
-                    time: '10am',
-                    duration: '2hr',
-                    cost: 0,
-                    description: 'Morning walk and group activities in the park.',
-                    highlights: ['Yoga', 'Group Games']
-                },
-                {
-                    type: 'highlight',
-                    location: 'Einstein Statue',
-                    mapLink: 'https://maps.google.com/?q=Einstein+Statue',
-                    time: '12pm',
-                    duration: '30min',
-                    cost: 0,
-                    description: 'Photo stop at the famous Einstein Statue.',
-                    highlights: ['Photo Opportunity']
-                }
-            ]
-        }
-        // Add more days/sections as needed
-    ];
+
+    tripItinerary: TripItinerary
+
+    constructor() {
+        //TODO: manage currency units based on local or user currency settings
+        //same thing with distance
+
+        this.tripItinerary = JSON.parse(window.localStorage.getItem('plan')!) as TripItinerary;
+        this.tripItinerary.itinerary.forEach((day) => {
+            day.date = new Date(day.date);
+            day.activities.forEach((activity) => {
+                activity.time = new Date(activity.time);
+            });
+        });
+    }
 
     selectDay(idx: number) {
         this.selectedDay = idx;

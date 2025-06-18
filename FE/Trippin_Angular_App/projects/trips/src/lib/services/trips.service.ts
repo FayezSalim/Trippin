@@ -14,8 +14,8 @@ export class TripsService {
 
   constructor() { }
 
-  async createTrip(tripInfo: basicTripInfo): Promise<string> {
-    return lastValueFrom(this.httpClient.post(this.serverUrl + '/trips/trip', tripInfo, { withCredentials: true })).then((x) => x as string);
+  async createTrip(tripInfo: basicTripInfo): Promise<any> {
+    return lastValueFrom(this.httpClient.post(this.serverUrl + '/trips/trip', tripInfo, { withCredentials: true })).then((x) => x );
   }
 
   async getPossibleActivites(tripInfo: Omit<basicTripInfo, 'preferredActivites'>): Promise<Activity[]> {

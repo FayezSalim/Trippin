@@ -53,15 +53,17 @@ export class TripPlannerComponent {
 
 
     //TODO fix typing 
-    const tripId = await this.tripService.createTrip({
+    const tripData = await this.tripService.createTrip({
       budget: this.tripsPlannerStore.budget!()!,
       destination: this.tripsPlannerStore.destination!()!,
       endDate: this.tripsPlannerStore.endDate!()!,
       startDate: this.tripsPlannerStore.startDate!()!,
       preferredActivites: this.tripsPlannerStore.activities().map(x => x.name)
     });
+    
+    window.localStorage.setItem("plan",JSON.stringify(tripData));
 
-    this.router.navigate(['trip'], { queryParams: { 'id': tripId } });
+    this.router.navigate(['trip'], { queryParams: { 'id': "adfadf" } });
   }
 
   goToActivities() {
